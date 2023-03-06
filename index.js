@@ -30,6 +30,20 @@ const questions = [
             }
         }
       },
+      {
+        type : "list",
+        name : "license",
+        message : "What license should your project have?",
+        choices: ["MIT" , "GPL", "Apache", "None"],
+        validate : Licenseinput => {
+            if (Licenseinput){
+                return true;
+            } else {
+                console.log("Please enter license used");
+                return false;
+            }
+        }
+      },
     {
     type : "input",
     name : "title",
@@ -116,11 +130,20 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    return new promises((resolve, reject))
+    return fs.writeFileSync(fileName, data);
 }
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer.prompt (question)
+    .then (data => {
+        const markdown = generateMarkdown(data);
+        writeToFile(data.fileName, markdown);
+        console.log("README file generate successfully!");
+
+    })
+    .catch(error => console.log(error));
+}
 
 // Function call to initialize app
 init();
