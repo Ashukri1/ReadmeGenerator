@@ -6,7 +6,7 @@ const generateMarkdown = require("./utils/generateMarkdown");
 const questions = [
     {
         type : "input",
-        name : "Github",
+        name : "github",
         message : "What is your GitHub username?",
         validate : input => {
             if (input){
@@ -19,7 +19,20 @@ const questions = [
       },
       {
         type : "input",
-        name : "Email",
+        name : "contribution",
+        message : "please enter contribution",
+        validate : input => {
+            if (input){
+                return true;
+            } else {
+                console.log('Please enter contributoion');
+                return false;
+            }
+        }
+      },
+      {
+        type : "input",
+        name : "email",
         message : "What is your Email?",
         validate : input => {
             if (input){
@@ -100,7 +113,7 @@ const questions = [
   },
   {
     type : "input",
-    name : "Guidelines",
+    name : "guidelines",
     message : "What is your contribution Guidelines?",
     validate : input => {
         if (input){
@@ -135,7 +148,7 @@ function writeToFile(fileName, data) {
 
 // TODO: Create a function to initialize app
 function init() {
-    inquirer.prompt (question)
+    inquirer.prompt (questions)
     .then (data => {
         const markdown = generateMarkdown(data);
         writeToFile(data.fileName, markdown);
